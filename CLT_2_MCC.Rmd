@@ -1,0 +1,48 @@
+---
+title: "Live Session 1 CLT"
+author: "Malcolm Carlson"
+date: "08/25/2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Simulator to Demonstrate CLT
+
+## Control Parameters
+```{r}
+n1 = 10000000 # sample size per sample for chi square distribution
+df1 = 2
+simulations = 10000 #number of samples and thus number of xbars we will generate.  
+chisqContainer = rchisq(n1,df1,ncp=0) #holds results from chisquare simulation
+hist(chisqContainer, main="Chi Square Distribution",ylab=NULL,xlab="10M Simulated Observations")
+
+```
+```{r}
+mean(chisqContainer)
+sd(chisqContainer)
+```
+
+## means from 50 draws of 10K sample  from 
+## chisqContainer
+```{r}
+for (i in 1:10000)
+{
+  som = sample(chisqContainer,50)
+  myxbar = mean(som)
+  xbarvec = c(xbarvec,myxbar)
+}
+
+```
+
+```{r}
+hist(xbarvec,main="Distribution of Sample Means from Chi Square", xlab="10K Distribution, 50 means per draw",ylab=NULL)
+```
+```{r}
+mean(xbarvec)
+sd(xbarvec)
+```
